@@ -106,6 +106,7 @@ class Model:
                 diccionario con los valores de las atributos del modelo
         """
         self._data: dict[str, str | dict | list] = {}
+
         #TODO
         # Realizar las comprabociones y gestiones necesarias
         # antes de la asignacion.
@@ -116,6 +117,17 @@ class Model:
         # almacenadas en la base de datos en una solo atributo
         # Encapsular los datos en una sola variable facilita la 
         # gestion en metodos como save.
+
+        # Check required fields
+        if not self._required_vars.issubset(kwargs.keys()):
+            raise ValueError("Missing required fields")
+
+        # Check allowed fields
+        allowed_vars = self._required_vars | self._admissible_vars
+
+        if not set(kwargs.keys()).issubset(allowed_vars):
+            raise ValueError("Unallowed fields present")
+
         self._data.update(kwargs)
 
     def __setattr__(self, name: str, value: str | dict) -> None:
