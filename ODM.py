@@ -106,6 +106,7 @@ class Model:
                 diccionario con los valores de las atributos del modelo
         """
         self._data: dict[str, str | dict | list] = {}
+        self._modified_vars: set[str] = set()
 
         #TODO
         # Realizar las comprabociones y gestiones necesarias
@@ -149,6 +150,7 @@ class Model:
 
         # Asigna el valor value a la variable name
         self._data[name] = value
+        self._modified_vars.add(name)
 
     def __getattr__(self, name: str) -> Any:
         """ Sobreescribe el metodo de acceso a atributos del objeto
@@ -171,7 +173,22 @@ class Model:
         modelo.
         """
         #TODO
-        self._db.insert_one(self._data)
+        if "_id" not in self._data:
+            result = self._db.insert_one(self._data)
+            self._data["_id"] = result.inserted_id
+        elif self._modified_vars:
+            changes = {
+                field: self._data[field]
+                for field in self._modified_vars
+            }
+
+            self._db.update_one(
+                {"_id": self._data["_id"]},
+                {"$set": changes}
+            )
+
+        
+        self._modified_vars.clear()
 
     def delete(self) -> None:
         """
