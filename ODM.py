@@ -1,5 +1,5 @@
 __author__ = 'Pablo Ramos Criado'
-__students__ = 'Javier Cejudo, Asier Pociello'
+__students__ = 'Javier Cejuela, Asier Pociello'
 
 
 from geopy.geocoders import Nominatim
@@ -316,18 +316,55 @@ def initApp(definitions_path: str = "./models.yml", mongodb_uri="mongodb://local
     """
     #TODO
     # Inicializar base de datos
+    client = MongoClient(mongodb_uri)
+    db = client[db_name]
 
     #TODO
     # Declarar tantas clases modelo colecciones existan en la base de datos
     # Leer el fichero de definiciones de modelos para obtener las colecciones,
     # indices y los atributos admitidos y requeridos para cada una de ellas.
+
+    with open(definitions_path, "r") as file:
+        definitions = yaml.safe_load(file)
+
+    for model_name, definition in definitions.items():
+
+        # Declare model class dynamically
+        scope[model_name] = type(model_name, (Model,), {})
+
+        required_vars = set(definition.get("required_vars", []))
+        admissible_vars = set(definition.get("admissible_vars", []))
+
+        indexes = {}
+
+        for field in definition.get("unique_indexes", []):
+            indexes[field] = "unique"
+
+        for field in definition.get("regular_indexes", []):
+            indexes[field] = "asc"
+
+        if "location_index" in definition:
+            location_field = definition["location_index"]
+            indexes[f"{location_field}_loc"] = "geosphere"
+            admissible_vars.add(f"{location_field}_loc")
+
+        # The class is declared at runtime and remains in scope, which does not
+        # have to be the global namespace: tests provide their own dictionary.
+        scope[model_name].init_class(
+            db_collection=db[model_name],
+            indexes=indexes,
+            required_vars=required_vars,
+            admissible_vars=admissible_vars
+        )
+        
+
     # Ejemplo de declaracion de modelo para colecion llamada MiModelo
-    scope["MiModelo"] = type("MiModelo", (Model,),{})
+    #scope["MiModelo"] = type("MiModelo", (Model,),{})
     # La clase se declara en tiempo de ejecucion y queda en scope, que no tiene
     # por que ser el espacio de nombres global: las pruebas le pasan su propio
     # diccionario. Por eso se inicializa a traves de scope y no por su nombre,
     # que ahi todavia no existe.
-    scope["MiModelo"].init_class(db_collection=None, indexes=None, required_vars=None, admissible_vars=None)
+    #scope["MiModelo"].init_class(db_collection=None, indexes=None, required_vars=None, admissible_vars=None)
 
 if __name__ == '__main__':
     
