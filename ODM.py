@@ -141,7 +141,7 @@ class Model:
         #TODO
         # Realizar las comprabociones y gestiones necesarias
         # antes de la asignacion.
-        
+
         allowed_vars = self._required_vars | self._admissible_vars
 
         if name not in allowed_vars:
@@ -171,7 +171,7 @@ class Model:
         modelo.
         """
         #TODO
-        pass #No olvidar eliminar esta linea una vez implementado
+        self._db.insert_one(self._data)
 
     def delete(self) -> None:
         """
