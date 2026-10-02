@@ -141,6 +141,11 @@ class Model:
         #TODO
         # Realizar las comprabociones y gestiones necesarias
         # antes de la asignacion.
+        
+        allowed_vars = self._required_vars | self._admissible_vars
+
+        if name not in allowed_vars:
+            raise ValueError("Unallowed field")
 
         # Asigna el valor value a la variable name
         self._data[name] = value
