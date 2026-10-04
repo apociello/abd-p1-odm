@@ -31,6 +31,7 @@ def getLocationPoint(address: str) -> Point:
     location = None
     intentos = 0
     maxIntentos = 5
+
     while location is None and intentos < maxIntentos:
         intentos += 1
         try:
@@ -48,6 +49,10 @@ def getLocationPoint(address: str) -> Point:
     # Si no se consiguieron coordenadas, lanzar ValueError: la funcion no puede
     # devolver un punto inventado ni None silenciosamente. Es lo que espera la
     # prueba test_get_location_point_timeout_failure.
+    if location is None:
+        raise ValueError("No se pudieron obtener coordenadas")
+
+    return Point((location.longitude, location.latitude))
 
 class Model:
     """ 
