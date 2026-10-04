@@ -178,6 +178,12 @@ class Model:
         modelo.
         """
         #TODO
+        if self._location_var and self._location_var in self._data:
+            loc_field = f"{self._location_var}_loc"
+            if loc_field not in self._data or self._location_var in self._modified_vars:
+                self._data[loc_field] = getLocationPoint(self._data[self._location_var])
+                self._modified_vars.add(loc_field)
+
         if "_id" not in self._data:
             result = self._db.insert_one(self._data)
             self._data["_id"] = result.inserted_id
