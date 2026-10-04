@@ -124,7 +124,7 @@ class Model:
             raise ValueError("Missing required fields")
 
         # Check allowed fields
-        allowed_vars = self._required_vars | self._admissible_vars
+        allowed_vars = self._required_vars | self._admissible_vars | {"_id"}
 
         if not set(kwargs.keys()).issubset(allowed_vars):
             raise ValueError("Unallowed fields present")
@@ -216,7 +216,8 @@ class Model:
         """ 
         #TODO
         # cls es el puntero a la clase
-        pass #No olvidar eliminar esta linea una vez implementado
+        cursor = cls._db.find(filter)
+        return ModelCursor(cls, cursor)
 
     @classmethod
     def aggregate(cls, pipeline: list[dict]) -> pymongo.command_cursor.CommandCursor:
@@ -342,7 +343,9 @@ class ModelCursor:
         Utilizar alive para comprobar si existen mas documentos.
         """
         #TODO
-        pass #No olvidar eliminar esta linea una vez implementado
+        while self.cursor.alive:
+            doc = self.cursor.next()
+            yield self.model(**doc)
 
 
 def initApp(definitions_path: str = "./models.yml", mongodb_uri="mongodb://localhost:27017/", db_name="abd", scope=globals()) -> None:
