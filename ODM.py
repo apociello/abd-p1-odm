@@ -427,58 +427,118 @@ def initApp(definitions_path: str = "./models.yml", mongodb_uri="mongodb://local
     # diccionario. Por eso se inicializa a traves de scope y no por su nombre,
     # que ahi todavia no existe.
     #scope["MiModelo"].init_class(db_collection=None, indexes=None, required_vars=None, admissible_vars=None)
-
+    
 if __name__ == '__main__':
     
-    # Inicializar base de datos y modelos con initApp
+    # Inicializar base de datos y modelos con initApp
     #TODO
     initApp()
 
     # Hacer pruebas para comprobar que funciona correctamente el modelo
     #TODO
+
+    # --- Artists ---
     # Crear modelo
-    venue = Venue(
-        name="Madison Square Garden",
-        address="4 Pennsylvania Plaza, New York, NY 10001",
-        capacity=20000
-    )
-
-    # Asignar nuevo valor a variable admitida del objeto 
-    venue.services = ["parking", "bar"]
-
-    # Asignar nuevo valor a variable no admitida del objeto 
-    try:
-        venue.color = "red"
-    except ValueError:
-        print("Unallowed variable correctly rejected")
+    artists_data = [
+        {"name": "Rosalía", "music_genres": ["flamenco", "pop"],
+         "country_origin": "Spain", "start_year": 2017},
+        {"name": "Bad Bunny", "music_genres": ["reggaeton", "trap"],
+         "country_origin": "Puerto Rico", "start_year": 2016},
+        {"name": "Arctic Monkeys", "music_genres": ["indie rock"],
+         "country_origin": "United Kingdom", "start_year": 2002},
+        {"name": "Dua Lipa", "music_genres": ["pop"],
+         "country_origin": "United Kingdom", "start_year": 2015},
+        {"name": "Karol G", "music_genres": ["reggaeton", "pop"],
+         "country_origin": "Colombia", "start_year": 2012},
+    ]
 
     # Guardar
-    venue.save()
-    print("Venue created:", venue.name)
-    print("Location:", venue.address_loc)
+    artists = []
+    for data in artists_data:
+        artist = Artist(**data)
+        artist.save()
+        artists.append(artist)
+        print("Artist created:", artist.name)
 
-    # Asignar nuevo valor a variable admitida del objeto
-    venue.capacity = 18000
+    # --- Venues ---
+    # Crear modelo
+    venues_data = [
+        {"name": "Palau Sant Jordi", "address": "Passeig Olímpic, 5-7, Barcelona",
+         "capacity": 17960, "services": ["parking", "accessibility"]},
+        {"name": "WiZink Center", "address": "Av. Felipe II, s/n, Madrid",
+         "capacity": 15500, "services": ["parking", "bar"]},
+        {"name": "The O2 Arena", "address": "Peninsula Square, London",
+         "capacity": 20000, "services": ["parking", "restaurants"]},
+        {"name": "Movistar Arena", "address": "Av. Beazley 3860, Buenos Aires",
+         "capacity": 15000, "services": ["parking", "bar"]},
+    ]
 
     # Guardar
-    venue.save()
-    print("Updated capacity:", venue.capacity)
+    venues = []
+    for data in venues_data:
+        venue = Venue(**data)
+        venue.save()
+        venues.append(venue)
+        print("Venue created:", venue.name, "-", venue.address_loc)
 
-    # Buscar nuevo documento con find
-    venues = Venue.find({"name": "Madison Square Garden"})
-
-    # Obtener primer documento
-    first = next(iter(venues))
-    print("Found:", first.name, first.capacity)
-
-    # Modificar valor de variable admitida
-    first.services = ["parking", "bar", "coat check"]
+    # --- Events ---
+    # Crear modelo
+    events_data = [
+        {"title": "Motomami Tour - Barcelona", "artists": [artists[0].name],
+         "venue": venues[0].name, "date_time": "2024-05-10T21:00:00",
+         "price_area": {"Floor": 80, "Lower stand": 60}, "tickets_sold": 15200},
+        {"title": "World's Hottest Tour - Madrid", "artists": [artists[1].name],
+         "venue": venues[1].name, "date_time": "2023-11-03T20:30:00",
+         "price_area": {"Floor": 90, "Amphitheater": 55}, "tickets_sold": 15500},
+        {"title": "AM Anniversary - Buenos Aires", "artists": [artists[2].name],
+         "venue": venues[3].name, "date_time": "2025-03-15T21:30:00",
+         "price_area": {"Field": 70, "Stands": 50}, "tickets_sold": 13800},
+        {"title": "Future Nostalgia Live - London", "artists": [artists[3].name],
+         "venue": venues[2].name, "date_time": "2022-09-20T20:00:00",
+         "price_area": {"Floor": 85, "Lower tier": 65}, "tickets_sold": 19000},
+        {"title": "Urban Summer - Madrid", "artists": [artists[4].name, artists[0].name],
+         "venue": venues[1].name, "date_time": "2025-07-12T22:00:00",
+         "price_area": {"Floor": 75, "Amphitheater": 50}, "tickets_sold": 14900},
+    ]
 
     # Guardar
-    first.save()
-    print("Updated services:", first.services)
+    events = []
+    for data in events_data:
+        event = Event(**data)
+        event.save()
+        events.append(event)
+        print("Event created:", event.title)
 
-    # Delete
-    first.delete()
-    print("Venue deleted")
+    # --- Attendees ---
+    # Crear modelo
+    attendees_data = [
+        {"name": "Juan Pérez", "email": "juan.perez@gmail.com",
+         "registration_date": "2023-01-15",
+         "address": "Calle Mayor 1, Madrid",
+         "genre_preferences": ["pop", "reggaeton"]},
+        {"name": "Laura Gómez", "email": "laura.gomez@gmail.com",
+         "registration_date": "2023-03-22",
+         "address": "Carrer de Balmes 10, Barcelona",
+         "genre_preferences": ["flamenco", "indie rock"]},
+        {"name": "Carlos Ruiz", "email": "carlos.ruiz@gmail.com",
+         "registration_date": "2024-02-10",
+         "genre_preferences": ["trap"]},
+        {"name": "Ana Torres", "email": "ana.torres@gmail.com",
+         "registration_date": "2024-06-05",
+         "genre_preferences": ["pop"]},
+        {"name": "Marco Silva", "email": "marco.silva@gmail.com",
+         "registration_date": "2025-01-30",
+         "address": "Av. Beazley 3800, Buenos Aires",
+         "genre_preferences": ["indie rock", "pop"]},
+    ]
+
+    # Guardar
+    attendees = []
+    for data in attendees_data:
+        attendee = Attendee(**data)
+        attendee.save()
+        attendees.append(attendee)
+        print("Attendee created:", attendee.name)
+
+    print("\nAll EnVivo data created successfully.")
     
