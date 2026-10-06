@@ -434,30 +434,51 @@ if __name__ == '__main__':
     #TODO
     initApp()
 
-    #Ejemplo
-    m = MiModelo(nombre="Pablo", apellido="Ramos", edad=18)
-    m.save()
-    m.nombre="Pedro"
-    print(m.nombre)
-
     # Hacer pruebas para comprobar que funciona correctamente el modelo
     #TODO
     # Crear modelo
+    venue = Venue(
+        name="Madison Square Garden",
+        address="4 Pennsylvania Plaza, New York, NY 10001",
+        capacity=20000
+    )
 
     # Asignar nuevo valor a variable admitida del objeto 
+    venue.services = ["parking", "bar"]
 
     # Asignar nuevo valor a variable no admitida del objeto 
+    try:
+        venue.color = "red"
+    except ValueError:
+        print("Unallowed variable correctly rejected")
 
     # Guardar
+    venue.save()
+    print("Venue created:", venue.name)
+    print("Location:", venue.address_loc)
 
     # Asignar nuevo valor a variable admitida del objeto
+    venue.capacity = 18000
 
     # Guardar
+    venue.save()
+    print("Updated capacity:", venue.capacity)
 
     # Buscar nuevo documento con find
+    venues = Venue.find({"name": "Madison Square Garden"})
 
     # Obtener primer documento
+    first = next(iter(venues))
+    print("Found:", first.name, first.capacity)
 
     # Modificar valor de variable admitida
+    first.services = ["parking", "bar", "coat check"]
 
     # Guardar
+    first.save()
+    print("Updated services:", first.services)
+
+    # Delete
+    first.delete()
+    print("Venue deleted")
+    
