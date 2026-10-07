@@ -1,0 +1,37 @@
+[
+  {
+    "_id": { "$oid": "6ac4e96cccc8b1ddbaf4d5b7" },
+    "name": "Rosalía",
+    "music_genres": ["flamenco", "pop"],
+    "country_origin": "Spain",
+    "start_year": 2017
+  },
+  {
+    "_id": { "$oid": "6ac4e96cccc8b1ddbaf4d5b8" },
+    "name": "Bad Bunny",
+    "music_genres": ["reggaeton", "trap"],
+    "country_origin": "Puerto Rico",
+    "start_year": 2016
+  },
+  {
+    "_id": { "$oid": "6ac4e96cccc8b1ddbaf4d5b9" },
+    "name": "Arctic Monkeys",
+    "music_genres": ["indie rock"],
+    "country_origin": "United Kingdom",
+    "start_year": 2002
+  },
+  {
+    "_id": { "$oid": "6ac4e96cccc8b1ddbaf4d5ba" },
+    "name": "Dua Lipa",
+    "music_genres": ["pop"],
+    "country_origin": "United Kingdom",
+    "start_year": 2015
+  },
+  {
+    "_id": { "$oid": "6ac4e96cccc8b1ddbaf4d5bb" },
+    "name": "Karol G",
+    "music_genres": ["reggaeton", "pop"],
+    "country_origin": "Colombia",
+    "start_year": 2012
+  }
+]

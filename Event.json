@@ -1,0 +1,47 @@
+[
+  {
+    "_id": { "$oid": "6ac4e976ccc8b1ddbaf4d5c0" },
+    "title": "Motomami Tour - Barcelona",
+    "artists": ["Rosalía"],
+    "venue": "Palau Sant Jordi",
+    "date_time": "2024-05-10T21:00:00",
+    "price_area": { "Floor": 80, "Lower stand": 60 },
+    "tickets_sold": 15200
+  },
+  {
+    "_id": { "$oid": "6ac4e976ccc8b1ddbaf4d5c1" },
+    "title": "World's Hottest Tour - Madrid",
+    "artists": ["Bad Bunny"],
+    "venue": "WiZink Center",
+    "date_time": "2023-11-03T20:30:00",
+    "price_area": { "Floor": 90, "Amphitheater": 55 },
+    "tickets_sold": 15500
+  },
+  {
+    "_id": { "$oid": "6ac4e976ccc8b1ddbaf4d5c2" },
+    "title": "AM Anniversary - Buenos Aires",
+    "artists": ["Arctic Monkeys"],
+    "venue": "Movistar Arena",
+    "date_time": "2025-03-15T21:30:00",
+    "price_area": { "Field": 70, "Stands": 50 },
+    "tickets_sold": 13800
+  },
+  {
+    "_id": { "$oid": "6ac4e976ccc8b1ddbaf4d5c3" },
+    "title": "Future Nostalgia Live - London",
+    "artists": ["Dua Lipa"],
+    "venue": "The O2 Arena",
+    "date_time": "2022-09-20T20:00:00",
+    "price_area": { "Floor": 85, "Lower tier": 65 },
+    "tickets_sold": 19000
+  },
+  {
+    "_id": { "$oid": "6ac4e976ccc8b1ddbaf4d5c4" },
+    "title": "Urban Summer - Madrid",
+    "artists": ["Karol G", "Rosalía"],
+    "venue": "WiZink Center",
+    "date_time": "2025-07-12T22:00:00",
+    "price_area": { "Floor": 75, "Amphitheater": 50 },
+    "tickets_sold": 14900
+  }
+]

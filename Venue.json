@@ -1,0 +1,34 @@
+[
+  {
+    "_id": { "$oid": "6ac4e96eccc8b1ddbaf4d5bc" },
+    "name": "Palau Sant Jordi",
+    "address": "Passeig Olímpic, 5-7, Barcelona",
+    "capacity": 17960,
+    "services": ["parking", "accessibility"],
+    "address_loc": { "type": "Point", "coordinates": [2.152513, 41.362318] }
+  },
+  {
+    "_id": { "$oid": "6ac4e971ccc8b1ddbaf4d5bd" },
+    "name": "WiZink Center",
+    "address": "Av. Felipe II, s/n, Madrid",
+    "capacity": 15500,
+    "services": ["parking", "bar"],
+    "address_loc": { "type": "Point", "coordinates": [-3.676524, 40.424184] }
+  },
+  {
+    "_id": { "$oid": "6ac4e974ccc8b1ddbaf4d5be" },
+    "name": "The O2 Arena",
+    "address": "Peninsula Square, London",
+    "capacity": 20000,
+    "services": ["parking", "restaurants"],
+    "address_loc": { "type": "Point", "coordinates": [0.003203, 51.502937] }
+  },
+  {
+    "_id": { "$oid": "6ac4e976ccc8b1ddbaf4d5bf" },
+    "name": "Movistar Arena",
+    "address": "Av. Beazley 3860, Buenos Aires",
+    "capacity": 15000,
+    "services": ["parking", "bar"],
+    "address_loc": { "type": "Point", "coordinates": [-58.41186, -34.65358] }
+  }
+]
